@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram - Symulator logowania</title>
+<style>
+  /* Uniwersalne ustawienia */
+  body {
+    background:#fafafa;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial, sans-serif;
+    margin:0;
+  }
+
+  /* Kontener logowania */
+  .login-container {
+    background:#fff;
+    border:1px solid #dbdbdb;
+    padding:40px 30px;
+    width:350px;
+    text-align:center;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+  }
+
+  /* Logo Instagram */
+  .login-container img {
+    width:175px;
+    margin-bottom:20px;
+  }
+
+  /* Pola input */
+  input {
+    width:100%;
+    padding:10px;
+    margin:5px 0;
+    border:1px solid #dbdbdb;
+    border-radius:4px;
+    background:#fafafa;
+    font-size:14px;
+  }
+
+  /* Przycisk logowania */
+  button {
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    background:#3897f0;
+    color:#fff;
+    font-weight:bold;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:14px;
+  }
+
+  /* Linki jak w Instagram */
+  .link {
+    display:block;
+    margin-top:12px;
+    font-size:12px;
+    color:#00376b;
+    text-decoration:none;
+  }
+
+  /* Styl mobilny */
+  @media (max-width: 400px) {
+    .login-container {
+      width:90%;
+      padding:30px 20px;
+    }
+    .login-container img {
+      width:140px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <!-- Logo Instagram -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png" alt="Instagram Logo">
+  
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="Numer telefonu, nazwa użytkownika lub e-mail" required>
+    <input type="password" id="password" placeholder="Hasło" required>
+    <button type="submit">Zaloguj się</button>
+  </form>
+
+  <!-- Linki edukacyjne -->
+  <a class="link" href="#">Nie pamiętasz hasła?</a>
+  <a class="link" href="#">Utwórz nowe konto</a>
+</div>
+
+<script>
+const form = document.getElementById('loginForm');
+
+// Wczytanie istniejących danych z LocalStorage
+let logs = JSON.parse(localStorage.getItem('testLogs')) || [];
+console.log("Aktualne zapisane dane testowe:", logs);
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  // Zapis do LocalStorage
+  logs.push({ username, password });
+  localStorage.setItem('testLogs', JSON.stringify(logs));
+
+  // Wyświetlenie wszystkich zapisanych danych w konsoli
+  console.clear();
+  console.log("=== Wszystkie zapisane dane testowe ===");
+  logs.forEach((log, index) => {
+    console.log(`${index+1}: Login = ${log.username}, Hasło = ${log.password}`);
+  });
+
+  // Czyszczenie formularza
+  this.reset();
+});
+</script>
+
+</body>
+</html>
